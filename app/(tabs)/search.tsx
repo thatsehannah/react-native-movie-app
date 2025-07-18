@@ -21,25 +21,31 @@ const Search = () => {
   //here, refetch is a copy of the fetchData function within the useFetch hook (the fetchMovies api function that's passed into the useFetch hook is the function that will run within this fetchData function)
   //we're setting the autoFetch param to false so that we can trigger the callback function passed to useFetch using refetch after we have a searchQuery defined
   const {
-    data: movies,
+    data: movies = [],
     loading: moviesLoading,
     error: moviesError,
     refetch: fetchSearchedMovies,
     reset,
   } = useFetch(() => fetchMovies({ query: searchQuery }), false);
 
+  //this useeffect updates the searchcount based on the movies the search results (from fetchSearchedMovies in the useEffect below) returns
+  //decided to abstract this logic out of the below useeffect (where I originally had it) because it was easier to decouple fetching the movies and updating the count so that updateSearchCount won't have to immediately rely on fetchSearchedMovies to return movies
   useEffect(() => {
-    const testAppwrite = async () => {
-      await updateSearchCount(searchQuery, movies[0]);
-    };
+    if (movies?.length! > 0 && movies?.[0]) {
+      console.log(`updating search count for ${movies?.[0].title}`);
+      updateSearchCount(searchQuery, movies[0]);
+    }
+  }, [movies]);
 
-    testAppwrite();
-
+  useEffect(() => {
     //when the user stops typing after 1/2 second, the refetch function(fetchSearchedMovies) will fire so that we don't overload the api with requests every time a keystroke is performed
-    const timeoutId = setTimeout(async () => {
+    const timeoutId = setTimeout(() => {
+      console.log("timeoutId has been triggered");
       if (searchQuery.trim()) {
-        await fetchSearchedMovies();
+        console.log(`search query: |${searchQuery.trim()}|`);
+        fetchSearchedMovies();
       } else {
+        console.log("Reset has been triggered");
         reset();
       }
     }, 500);

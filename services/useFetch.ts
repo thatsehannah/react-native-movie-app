@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 //this hook will be used with the functions defined in the api.ts file throughout the application
 //fetchFunction is a callback function that is passed in as a parameter and will be called within fetchData
 const useFetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
-  const [data, setData] = useState<T | null>();
+  const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
