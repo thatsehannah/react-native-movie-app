@@ -50,3 +50,20 @@ export const updateSearchCount = async (query: string, movie: Movie) => {
     throw error;
   }
 };
+
+//showing top 5 movies
+export const getTrendingMovies = async (): Promise<
+  TrendingMovie[] | undefined
+> => {
+  try {
+    const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
+      Query.limit(5),
+      Query.orderDesc("count"),
+    ]);
+
+    return result.documents as unknown as TrendingMovie[]; //since typescript won't allow the direct cast to TrendingMovie (because we can't fully guarantee that what's returned from Appwrite will match TrendingMovie[]), unknown acts a bridge which allows you to ultimately cast result.documents to whatever type you desire
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+};
