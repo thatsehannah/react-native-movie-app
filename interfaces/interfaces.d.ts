@@ -70,8 +70,3 @@ interface MovieDetails {
   vote_average: number;
   vote_count: number;
 }
-
-interface TrendingCardProps {
-  movie: TrendingMovie;
-  index: number;
-}
