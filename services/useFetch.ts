@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 //useFetch(fetchMovies)
 //this hook will be used with the functions defined in the api.ts file throughout the application
+//fetchFunction is a callback function
 const useFetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
   const [data, setData] = useState<T | null>();
   const [loading, setLoading] = useState(false);
