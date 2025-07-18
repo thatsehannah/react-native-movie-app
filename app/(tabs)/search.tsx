@@ -3,6 +3,7 @@ import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
+import { updateSearchCount } from "@/services/appwrite";
 import useFetch from "@/services/useFetch";
 import React, { useEffect, useState } from "react";
 import {
@@ -28,6 +29,12 @@ const Search = () => {
   } = useFetch(() => fetchMovies({ query: searchQuery }), false);
 
   useEffect(() => {
+    const testAppwrite = async () => {
+      await updateSearchCount(searchQuery, movies[0]);
+    };
+
+    testAppwrite();
+
     //when the user stops typing after 1/2 second, the refetch function(fetchSearchedMovies) will fire so that we don't overload the api with requests every time a keystroke is performed
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
