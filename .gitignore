@@ -40,3 +40,6 @@ app-example
 
 # visual studio code
 .vscode
+
+#.env
+.env
