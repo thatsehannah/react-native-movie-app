@@ -34,6 +34,7 @@ const useFetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
     if (autoFetch) {
       fetchData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //refetch is just a copy of the fetchData function that will be used when autoFetch is set to false which will allow us to call the fetchData function manually
