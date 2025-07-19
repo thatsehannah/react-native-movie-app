@@ -70,3 +70,9 @@ interface MovieDetails {
   vote_average: number;
   vote_count: number;
 }
+
+interface SavedMovie {
+  movie_id: number;
+  title: string;
+  poster_path: string;
+}

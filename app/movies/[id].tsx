@@ -1,8 +1,9 @@
 import { icons } from "@/constants/icons";
 import { fetchMovieDetails } from "@/services/api";
+import { getSavedMovies, updateSavedCollection } from "@/services/appwrite";
 import useFetch from "@/services/useFetch";
 import { useLocalSearchParams } from "expo-router";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -41,11 +42,13 @@ const MovieValuePill = ({ children }: { children: ReactNode }) => {
 };
 
 const MovieDetails = () => {
+  const [isSaved, setIsSaved] = useState(false);
   const { id } = useLocalSearchParams();
-
   const { data: movie, loading } = useFetch(() =>
     fetchMovieDetails(id as string)
   );
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const actionRef = useRef<"add" | "remove">("add");
 
   const formatReleaseDate = (releaseDate: string) => {
     const date = new Date(releaseDate);
@@ -56,6 +59,49 @@ const MovieDetails = () => {
       day: "numeric",
     }).format(date);
   };
+
+  const handleSaveOnPress = () => {
+    const newSavedState = !isSaved;
+    setIsSaved(newSavedState);
+
+    actionRef.current = newSavedState ? "add" : "remove";
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    const currentMovie: SavedMovie = {
+      movie_id: movie?.id!,
+      poster_path: movie?.poster_path!,
+      title: movie?.title!,
+    };
+
+    timeoutRef.current = setTimeout(() => {
+      updateSavedCollection(currentMovie, actionRef.current);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    const check = async () => {
+      console.log("check is firing...");
+
+      const results = await getSavedMovies();
+      const isCurrentMovieSaved = results?.filter(
+        (item) => item.movie_id === movie?.id
+      )[0];
+
+      if (isCurrentMovieSaved) {
+        console.log("movie is saved!");
+
+        setIsSaved(true);
+      } else {
+        console.log("movie ain't saved!");
+        setIsSaved(false);
+      }
+    };
+
+    check();
+  }, [movie]);
 
   return (
     <View className='bg-primary flex-1'>
@@ -78,29 +124,41 @@ const MovieDetails = () => {
               />
             </View>
             <View className='flex-col items-start justify-center mt-5 px-5'>
-              <Text className='text-white font-bold text-xl'>
-                {movie?.title}
-              </Text>
-              <View className='flex-row items-center gap-x-1 mt-2'>
-                <Text className='text-light-200 text-sm'>
-                  {movie?.release_date?.split("-")[0]}
-                </Text>
-                <Text className='text-light-200 text-sm'>
-                  {movie?.runtime} m
-                </Text>
+              <View className='flex flex-row w-full justify-between'>
+                <View className='flex-col'>
+                  <Text className='text-white font-bold text-xl'>
+                    {movie?.title}
+                  </Text>
+                  <View className='flex-row items-center gap-x-1 mt-2'>
+                    <Text className='text-light-200 text-sm'>
+                      {movie?.release_date?.split("-")[0]}
+                    </Text>
+                    <Text className='text-light-200 text-sm'>
+                      {movie?.runtime} m
+                    </Text>
+                  </View>
+                  <MovieValuePill>
+                    <Image
+                      source={icons.star}
+                      className='size-4'
+                    />
+                    <Text className='text-white font-bold text-sm'>
+                      {Math.round(movie?.vote_average ?? 0)}/10
+                    </Text>
+                    <Text className='text-light-200 text-sm'>
+                      ({movie?.vote_count} votes)
+                    </Text>
+                  </MovieValuePill>
+                </View>
+                <TouchableOpacity onPress={handleSaveOnPress}>
+                  <View
+                    className={`rounded-full size-6 ${
+                      isSaved ? "bg-yellow-300" : "bg-light-200"
+                    }`}
+                  />
+                </TouchableOpacity>
               </View>
-              <MovieValuePill>
-                <Image
-                  source={icons.star}
-                  className='size-4'
-                />
-                <Text className='text-white font-bold text-sm'>
-                  {Math.round(movie?.vote_average ?? 0)}/10
-                </Text>
-                <Text className='text-light-200 text-sm'>
-                  ({movie?.vote_count} votes)
-                </Text>
-              </MovieValuePill>
+
               <MovieInfo
                 label='Overview'
                 value={movie?.overview}
