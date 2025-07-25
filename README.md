@@ -45,7 +45,7 @@ cd react-native-movie-app
 npm install
 ```
 
-## 3. Add your TMDB API key
+## 3. Add your API keys
 
 Create a .env file in the root directory:
 
