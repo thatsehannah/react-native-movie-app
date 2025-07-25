@@ -14,7 +14,7 @@ A sleek, mobile-first movie discovery app built with React Native and TypeScript
 
 - **React Native** – cross-platform mobile app framework
 - **TypeScript** – static type checking
-- **React Navigation** – seamless screen transitions
+- **NativeWind** - TailwindCSS styling for mobile app development
 - **Fetch** – for HTTP requests
 - **TMDB API** – for real-time movie data
 - **Appwrite** - for aggregating trending movies & favoriting movies
