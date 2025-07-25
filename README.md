@@ -21,13 +21,14 @@ A sleek, mobile-first movie discovery app built with React Native and TypeScript
 - **Expo** – easy development/testing
 
 ## 🗂 Project Structure
-
+```
 ├── app/              # Screens, tabs, and layout
 ├── services/         # API config and TMDB endpoints and useFetch custom hook
 ├── components/       # Reusable UI components
 ├── constants/        # Static icon and image imports
 ├── interfaces/       # TypeScript interfaces and models
 └── assets/           # Images, backgrounds, fonts, & icons
+```
 
 ## 🚀 Getting Started
 
