@@ -1,50 +1,91 @@
-# Welcome to your Expo app 👋
+# 🎬 React Native Movie App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A sleek, mobile-first movie discovery app built with React Native and TypeScript. This app fetches data from The Movie Database (TMDB) API and showcases popular movies, trending content, and detailed movie views—all wrapped in a smooth, performant UI. The app also aggregates a trending movies list via saving searches to Appwrite.
 
-## Get started
+## 📱 Features
 
-1. Install dependencies
+- 🔍 Browse trending, upcoming, and top-rated movies
+- 🎞 View detailed movie info including poster, description, genres, and release date
+- 🧠 Smart loading states and image caching for better performance
+- ⚡ Smooth navigation between screens with stack-based routing
+- 📱 Fully responsive design tailored for iOS and Android
 
-   ```bash
-   npm install
-   ```
+## 🛠 Tech Stack
 
-2. Start the app
+- **React Native** – cross-platform mobile app framework
+- **TypeScript** – static type checking
+- **React Navigation** – seamless screen transitions
+- **Fetch** – for HTTP requests
+- **TMDB API** – for real-time movie data
+- **Appwrite** - for aggregating trending movies & favoriting movies
+- **Expo** – easy development/testing
 
-   ```bash
-   npx expo start
-   ```
+## 🗂 Project Structure
 
-In the output, you'll find options to open the app in a
+├── app/              # Screens, tabs, and layout
+├── services/         # API config and TMDB endpoints and useFetch custom hook
+├── components/       # Reusable UI components
+├── constants/        # Static icon and image imports
+├── interfaces/       # TypeScript interfaces and models
+└── assets/           # Images, backgrounds, fonts, & icons
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🚀 Getting Started
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### 1. Clone the repo
 
 ```bash
-npm run reset-project
+git clone https://github.com/thatsehannah/react-native-movie-app.git
+cd react-native-movie-app
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 2. Install dependencies
 
-## Learn more
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## 3. Add your TMDB API key
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Create a .env file in the root directory:
 
-## Join the community
+```
+EXPO_PUBLIC_MOVIE_API_KEY=your_api_key
+EXPO_PUBLIC_APPWRITE_PROJECT_ID=your_project_id
+EXPO_PUBLIC_APPWRITE_ENDPOINT=your_appwrite_endpoint
+EXPO_PUBLIC_APPWRITE_DATABASE_ID=your_appwrite_database_id
+EXPO_PUBLIC_APPWRITE_METRICS_COLLECTION_ID=your_collection_id
+EXPO_PUBLIC_APPWRITE_SAVED_MOVIES_COLLECTION_ID=your_collection_id
+```
+> You can get a free API key from https://www.themoviedb.org/documentation/api. You will have to create an Appwrite account and create a project to get the proper keys. Learn more at https://appwrite.io/.
 
-Join our community of developers creating universal apps.
+## 4. Run the app
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Using expo:
+```bash
+npx expo start
+```
+
+Using the React Native CLI:
+```bash
+npx react-native run-ios
+# or
+npx react-native run-android
+```
+
+## 🧪 To Do
+- Add search functionality
+- Integrate user favorites with Appwrite (in progress)
+- Add UI skeleton loaders for a polished UX
+
+## Screenshots
+<img width="300" height="650" alt="IMG_2741" src="https://github.com/user-attachments/assets/9d2a1343-8cc1-4ad8-84d1-13050b4047b5" />
+<img width="300" height="650" alt="IMG_2742" src="https://github.com/user-attachments/assets/520169b0-8080-4256-8605-9b666b024e92" />
+<img width="300" height="650" alt="IMG_2743" src="https://github.com/user-attachments/assets/d60b58be-2ee4-404d-abb3-bc7b3badd08d" />
+
+
+## Learnings
+This project gave me hands-on experience working with API consumption, using NativeWind for styling, implementing navigation, using a cloud database to persist data (Appwrite), and be able to apply my React.js knowledge to build this app.
+
+---
+
+Credit to [JS Mastery](https://www.youtube.com/watch?v=f8Z9JyB2EIE) for this course.
